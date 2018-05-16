@@ -41,7 +41,7 @@
 	<link rel="stylesheet" href="angular/modules/bootbox/bs4-fix.css">	
 	<script src="angular/modules/bootbox/bootbox.min.js"></script>
 	<script src="angular/modules/growl/jquery.bootstrap-growl.min.js"></script>
-	<script src="angular/modules/blockui/jquery.blockUI.js"></script>	
+	<script src="angular/modules/blockui/jquery.blockUI.js"></script>
 
 	<!-- angular -->	
 	<script src="angular/angular.min.js"></script>
@@ -55,6 +55,7 @@
 	<script src="angular/modules/blockui/blockui.js"></script>
 	<script src="angular/modules/account/account.js"></script>
 	<script src="angular/modules/validation/validate.js"></script>
+	<script src="angular/modules/post/window-open-post.js"></script>	
 	<script src="modules/profiles.js"></script>
 
 	<!-- controller -->
@@ -132,7 +133,7 @@
 						  <input class="form-control mr-sm-2" type="text" placeholder="Year" ng-model="filter.year">
 						  <select class="form-control mr-sm-2" ng-model="filter.month" ng-options="month.description for month in months track by month.month"></select>
 						  <button class="btn btn-outline-success my-2 my-sm-0 mr-sm-2" type="button" ng-click="app.list(this)">Filter</button>
-						  <button class="btn btn-outline-success my-2 my-sm-0" type="button">Export</button>
+						  <button class="btn btn-outline-success my-2 my-sm-0" type="button" ng-click="app.export(this)">Export</button>
 						</form>
 					  </div>
 					</nav>
