@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 16, 2018 at 05:06 PM
+-- Generation Time: May 17, 2018 at 11:29 AM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -41,7 +41,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `first_name`, `last_name`, `username`, `password`, `update_log`, `system_log`) VALUES
-(1, 'Sly', 'Flores', 'admin', 'admin', '2018-04-08 20:11:22', NULL);
+(1, 'Admin', '', 'admin', 'admin', '2018-04-08 20:11:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -75,14 +75,6 @@ CREATE TABLE `reg_jobseekers` (
   `Weight` float DEFAULT NULL,
   `emp_stat` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `reg_jobseekers`
---
-
-INSERT INTO `reg_jobseekers` (`SeekerID`, `FirstName`, `MiddleName`, `LastName`, `OccupationalSkill`, `Occ_Code`, `Sex`, `Age`, `CivilStat`, `EducAttain`, `YearsofWorkExp`, `PhoneNo`, `Licence`, `DateRegistered`, `JobPlacement`, `Job`, `School`, `DateOfBirth`, `YearGraduated`, `EmailAddress`, `Address`, `Height`, `Weight`, `emp_stat`) VALUES
-(1, 'Sylvester', 'Bulilan', 'Flores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-04-16 16:12:47', NULL, NULL, NULL, '1982-11-14', NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'qwertyt', 'adg', 'ag', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2018-05-16 16:13:27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables

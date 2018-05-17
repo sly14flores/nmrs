@@ -9,43 +9,47 @@ require_once 'db.php';
 
 $filename = "nmrs";
 
-$indexes = [
-	"category",
-	"personal_info_no",
-	"lastname",
-	"firstname",
-	"middlename",
-	"extension_name",
-	"civil_status",
-	"gender",
-	"birth_date",
-	"birth_place",
-	"age",
-	"family_head",
-	"family_members",
-	"employment_status",
-	"occupation",
-	"philhealth_member",
-	"address_house",
-	"address_sitio",
-	"address_purok",
-	"address_barangay",
-	"address_municipality",
-	"address_province",
-	"contact_no",
-	"contact_email",
-	"educational_attainment",
-	"presented_id",
-	"presented_id_no"
-];
+$where = "";
 
+if ( (isset($filter['year'])) && (isset($filter['month'])) ) {
+	
+	if ($filter['month']['month']=="-") $year_month = "'".$filter['year']."-%'";
+	else $year_month = "'".$filter['year']."-".$filter['month']['month']."%'";
+	
+	$where = " WHERE DateRegistered LIKE $year_month";
+	
+};
 
 $con = new pdo_db();
 
+$sql = "SELECT CONCAT_WS(', ',`reg_jobseekers`.`LastName`, CONCAT_WS(' ',`reg_jobseekers`.`FirstName`, CONCAT_WS('.', SUBSTRING(`reg_jobseekers`.`MiddleName`, 1, 1), ''))) AS NAME, OccupationalSkill,    Occ_Code, Sex, Age, CivilStat, EducAttain, YearsofWorkExp, PhoneNo, Licence, DATE_FORMAT(DateRegistered,'%b %d %Y') AS DateRegistered, JobPlacement, Job, School, DATE_FORMAT(DateOfBirth,'%b %d %Y') AS BirthDate, YearGraduated, EmailAddress, Address, Height, Weight, Emp_Stat FROM nmrs.reg_jobseekers $where ORDER BY NAME ASC";
+
+$profiles = $con->getData($sql);
+
+$indexes = [];
+
+if (count($profiles)) {
+
+	foreach ($profiles[0] as $p => $value) {
+
+		$indexes[] = $p;
+
+	};
+
+};
+
+if (!count($indexes)) {
+	
+	echo "No records found";
+	
+	exit();
+	
+};
+
 $objPHPExcel = new PHPExcel();
 
-$objPHPExcel->getProperties()->setCreator("ILMB System")
-							 ->setLastModifiedBy("ILMB System")
+$objPHPExcel->getProperties()->setCreator("NMRS System")
+							 ->setLastModifiedBy("NMRS System")
 							 ->setTitle("Profiles")
 							 ->setSubject("Profiles Report")
 							 ->setDescription("")
@@ -54,58 +58,43 @@ $objPHPExcel->getProperties()->setCreator("ILMB System")
 
 $objWorksheet = $objPHPExcel->getActiveSheet();
 
-/* $attendances = $con->getData("SELECT category, personal_info_no, lastname, firstname, middlename, extension_name, civil_status, gender, birth_date, birth_place, age, family_head, family_members, employment_status, occupation, philhealth_member, address_house, address_sitio, address_purok, address_barangay, address_municipality, address_province, contact_no, contact_email, educational_attainment, presented_id, presented_id_no FROM personal_infos WHERE attendance = 1");
-$profiles = $con->getData("SELECT category, personal_info_no, lastname, firstname, middlename, extension_name, civil_status, gender, birth_date, birth_place, age, family_head, family_members, employment_status, occupation, philhealth_member, address_house, address_sitio, address_purok, address_barangay, address_municipality, address_province, contact_no, contact_email, educational_attainment, presented_id, presented_id_no FROM personal_infos");
+$row = 1;
+foreach ($indexes as $i => $index) {
 
-foreach ($attendances as $i => $profile) {
-	
-	$row = $i+2;
-	foreach ($indexes as $ii => $index) {
-		$value = (($profile[$indexes[$ii]]==NULL)||($profile[$indexes[$ii]]==""))?"":$profile[$indexes[$ii]];
-		if ($indexes[$ii] == "birth_date") {
-			$value = ($profile[$indexes[$ii]]=="1970-01-01")?"":$profile[$indexes[$ii]];
-		}
-		if ($indexes[$ii] == "address_barangay") {
-			$value = barangay($profile[$indexes[$ii]]);
-		}
-		if ($indexes[$ii] == "address_municipality") {
-			$value = municipality($profile[$indexes[$ii]]);
-		}
-		if ($indexes[$ii] == "address_province") {
-			$value = "La Union";
-		}
-		if (($indexes[$ii] == "family_head") || ($indexes[$ii] == "philhealth_member")) {
-			$value = ($profile[$indexes[$ii]])?"Yes":"No";
-		}		
-		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($ii, $row, $value);
-	}
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($i, $row, $index);
 	
 };
 
-foreach ($profiles as $i => $profile) {
-	
-	$row = $i+2;
-	foreach ($indexes as $ii => $index) {
-		$value = (($profile[$indexes[$ii]]==NULL)||($profile[$indexes[$ii]]==""))?"":$profile[$indexes[$ii]];
-		if ($indexes[$ii] == "birth_date") {
-			$value = ($profile[$indexes[$ii]]=="1970-01-01")?"":$profile[$indexes[$ii]];
-		}
-		if ($indexes[$ii] == "address_barangay") {
-			$value = barangay($profile[$indexes[$ii]]);
-		}
-		if ($indexes[$ii] == "address_municipality") {
-			$value = municipality($profile[$indexes[$ii]]);
-		}
-		if ($indexes[$ii] == "address_province") {
-			$value = "La Union";
-		}
-		if (($indexes[$ii] == "family_head") || ($indexes[$ii] == "philhealth_member")) {
-			$value = ($profile[$indexes[$ii]])?"Yes":"No";
-		}		
-		$objPHPExcel->setActiveSheetIndex(1)->setCellValueByColumnAndRow($ii, $row, $value);
-	}
-	
-}; */
+$columns = array("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U");
+$objPHPExcel->getDefaultStyle()->getFont()->setSize(14);
+for ($n=0; $n<count($columns); ++$n) {
+	$objPHPExcel->getActiveSheet()->getColumnDimension($columns[$n])->setAutoSize(true);
+}
+
+$objPHPExcel->getActiveSheet()->getRowDimension("1")->setRowHeight(25);
+
+$objPHPExcel->getActiveSheet()->getStyle('A1:U1')->getFill()
+			->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+			->getStartColor()->setARGB('8A8A8A');
+
+$row++;
+foreach ($profiles as $key => $profile) {
+
+	$i = 0;
+
+	foreach ($profile as $c => $value) {
+		
+		$value = ($value==NULL)?"":$value;
+
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($i, $row, $value);	
+
+		++$i;
+
+	};
+
+	$row++;
+
+};
 
 $objPHPExcel->setActiveSheetIndex(0);
 
