@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 17, 2018 at 11:29 AM
+-- Generation Time: May 18, 2018 at 11:35 AM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -106,7 +106,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `reg_jobseekers`
 --
 ALTER TABLE `reg_jobseekers`
-  MODIFY `SeekerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `SeekerID` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
