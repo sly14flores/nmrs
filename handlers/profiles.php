@@ -9,12 +9,15 @@ $con = new pdo_db();
 $where = "";
 
 if ( (isset($_POST['year'])) && (isset($_POST['month'])) ) {
-	
-	if ($_POST['month']['month']=="-") $year_month = "'".$_POST['year']."-%'";
-	else $year_month = "'".$_POST['year']."-".$_POST['month']['month']."%'";
-	
+
+	$year = ($_POST['year']=="")?"":$_POST['year'];
+	$month = $_POST['month']['month'];
+
+	$year_month = "'%$year-$month-%'";
+	if ($month == "-") $year_month = "'$year-%'";
+
 	$where = " WHERE DateRegistered LIKE $year_month";
-	
+
 };
 
 $profiles = $con->getData("SELECT * FROM reg_jobseekers".$where);

@@ -143,7 +143,8 @@ angular.module('app-module', ['bootstrap-modal','ui.bootstrap','block-ui','boots
 					} else {
 						
 						scope.reg_jobseeker = {};
-						scope.reg_jobseeker.SeekerID = 0;						
+						scope.reg_jobseeker.SeekerID = 0;
+						scope.reg_jobseeker.DateRegistered = new Date();
 						
 					};
 					

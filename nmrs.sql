@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 18, 2018 at 11:35 AM
+-- Generation Time: May 18, 2018 at 12:03 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -60,7 +60,7 @@ CREATE TABLE `reg_jobseekers` (
   `Age` int(11) DEFAULT NULL,
   `CivilStat` varchar(16) DEFAULT NULL,
   `EducAttain` varchar(250) DEFAULT NULL,
-  `YearsofWorkExp` varchar(250) DEFAULT NULL,
+  `YearsofWorkExp` int(11) DEFAULT NULL,
   `PhoneNo` varchar(64) DEFAULT NULL,
   `Licence` varchar(250) DEFAULT NULL,
   `DateRegistered` datetime DEFAULT NULL,
@@ -68,11 +68,11 @@ CREATE TABLE `reg_jobseekers` (
   `Job` varchar(255) DEFAULT NULL,
   `School` varchar(255) DEFAULT NULL,
   `DateOfBirth` date DEFAULT NULL,
-  `YearGraduated` int(11) DEFAULT NULL,
+  `YearGraduated` year(4) DEFAULT NULL,
   `EmailAddress` varchar(255) DEFAULT NULL,
   `Address` varchar(255) DEFAULT NULL,
-  `Height` float DEFAULT NULL,
-  `Weight` float DEFAULT NULL,
+  `Height` varchar(10) DEFAULT NULL,
+  `Weight` varchar(10) DEFAULT NULL,
   `emp_stat` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

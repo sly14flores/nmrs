@@ -13,8 +13,11 @@ $where = "";
 
 if ( (isset($filter['year'])) && (isset($filter['month'])) ) {
 	
-	if ($filter['month']['month']=="-") $year_month = "'".$filter['year']."-%'";
-	else $year_month = "'".$filter['year']."-".$filter['month']['month']."%'";
+	$year = ($filter['year']=="")?"":$filter['year'];
+	$month = $filter['month']['month'];
+
+	$year_month = "'%$year-$month-%'";
+	if ($month == "-") $year_month = "'$year-%'";
 	
 	$where = " WHERE DateRegistered LIKE $year_month";
 	
